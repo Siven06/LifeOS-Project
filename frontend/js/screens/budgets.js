@@ -5,14 +5,14 @@ const budgetsScreen = {
       <div class="min-h-screen bg-background pb-32">
         <header class="bg-surface/80 backdrop-blur-xl border-b border-white/10 flex items-center px-5 h-16 sticky top-0 z-50 gap-4">
           <a href="#/" class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-bright/20 rounded-full transition-colors">arrow_back</a>
-          <h1 class="text-headline-md font-semibold">Budgets</h1>
+          <h1 class="text-headline-md font-semibold">${__('budgets.title')}</h1>
         </header>
 
         <main class="max-w-3xl mx-auto px-5 pt-6">
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-headline-md">Monthly Budgets</h2>
+            <h2 class="text-headline-md">${__('budgets.monthlyBudgets')}</h2>
             <button id="btn-add-budget" class="bg-primary-container text-on-primary px-4 py-2 rounded-xl text-label-md flex items-center gap-2 hover:brightness-110 transition-all">
-              <span class="material-symbols-outlined text-[18px]">add</span> Add Budget
+              <span class="material-symbols-outlined text-[18px]">add</span> ${__('budgets.addBudget')}
             </button>
           </div>
           <div id="budgets-list" class="space-y-4">
@@ -39,8 +39,8 @@ const budgetsScreen = {
         list.innerHTML = `
           <div class="glass-card rounded-2xl p-8 text-center">
             <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">account_balance_wallet</span>
-            <p class="text-body-md text-on-surface-variant">No budgets set for this month</p>
-            <p class="text-label-sm text-on-surface-variant mt-1">Create a budget to track your spending</p>
+            <p class="text-body-md text-on-surface-variant">${__('budgets.noBudgets')}</p>
+            <p class="text-label-sm text-on-surface-variant mt-1">${__('budgets.noBudgetsHint')}</p>
           </div>`;
         return;
       }
@@ -53,13 +53,13 @@ const budgetsScreen = {
                 <span class="material-symbols-outlined">${this.getCategoryIcon(b.category)}</span>
               </div>
               <div>
-                <p class="text-body-md font-semibold">${b.category.charAt(0) + b.category.slice(1).toLowerCase()}</p>
+                <p class="text-body-md font-semibold">${tc(b.category)}</p>
                 <p class="text-label-sm text-on-surface-variant">$${Number(b.spentAmount).toLocaleString()} / $${Number(b.limitAmount).toLocaleString()}</p>
               </div>
             </div>
             <div class="text-right">
               <p class="text-body-md font-bold ${b.usagePercent > 80 ? 'text-error' : b.usagePercent > 50 ? 'text-secondary' : 'text-tertiary-fixed-dim'}">${b.usagePercent}%</p>
-              <p class="text-label-sm text-on-surface-variant">${b.usagePercent > 80 ? 'Over limit!' : 'Remaining: $' + Number(b.remainingAmount).toLocaleString()}</p>
+              <p class="text-label-sm text-on-surface-variant">${b.usagePercent > 80 ? __('budgets.overLimit') : __('budgets.remaining', { amount: Number(b.remainingAmount).toLocaleString() })}</p>
             </div>
           </div>
           <div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
@@ -68,7 +68,7 @@ const budgetsScreen = {
         </div>
       `).join('');
     } catch (err) {
-      list.innerHTML = `<p class="text-center text-error text-body-md py-12">Failed to load budgets</p>`;
+      list.innerHTML = `<p class="text-center text-error text-body-md py-12">${__('budgets.failedToLoad')}</p>`;
     }
   },
 
@@ -89,25 +89,25 @@ const budgetsScreen = {
       <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-backdrop"></div>
       <div class="relative w-full max-w-md bg-surface-container border border-white/10 rounded-t-2xl sm:rounded-2xl p-6 slide-up mx-4">
         <div class="flex items-center justify-between mb-6">
-          <h3 class="text-headline-md">New Budget</h3>
+          <h3 class="text-headline-md">${__('budgets.newBudget')}</h3>
           <button id="modal-close" class="material-symbols-outlined p-2 hover:bg-surface-bright/20 rounded-full text-on-surface-variant">close</button>
         </div>
         <form id="budget-form" class="space-y-4">
           <div>
-            <label class="text-label-sm text-on-surface-variant mb-2 block">Category</label>
+            <label class="text-label-sm text-on-surface-variant mb-2 block">${__('budgets.category')}</label>
             <select name="category" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container/50 transition-colors text-body-md" required>
-              <option value="">Select category</option>
+              <option value="">${__('budgets.selectCategory')}</option>
               ${['FOOD', 'TRANSPORT', 'SHOPPING', 'ENTERTAINMENT', 'BILLS', 'HEALTH', 'EDUCATION', 'OTHER'].map(c =>
-                `<option value="${c}">${c.charAt(0) + c.slice(1).toLowerCase()}</option>`
+                `<option value="${c}">${tc(c)}</option>`
               ).join('')}
             </select>
           </div>
           <div>
-            <label class="text-label-sm text-on-surface-variant mb-2 block">Monthly Limit ($)</label>
+            <label class="text-label-sm text-on-surface-variant mb-2 block">${__('budgets.monthlyLimit')}</label>
             <input type="number" name="limitAmount" step="0.01" min="0.01" class="w-full bg-surface-container border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container/50 transition-colors text-body-md" placeholder="500.00" required/>
           </div>
           <p id="budget-error" class="text-error text-label-sm hidden"></p>
-          <button type="submit" class="w-full bg-primary-container text-on-primary font-semibold py-4 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all text-body-md">Create Budget</button>
+          <button type="submit" class="w-full bg-primary-container text-on-primary font-semibold py-4 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all text-body-md">${__('budgets.createBudget')}</button>
         </form>
       </div>
     `;
@@ -124,7 +124,7 @@ const budgetsScreen = {
         errorEl.classList.add('hidden');
         await api.budgets.create({ category: form.category.value, limitAmount: parseFloat(form.limitAmount.value) });
         overlay.remove();
-        toast.success('Budget created');
+        toast.success(__('budgets.budgetCreated'));
         this.loadBudgets();
       } catch (err) {
         const errorEl = overlay.querySelector('#budget-error');

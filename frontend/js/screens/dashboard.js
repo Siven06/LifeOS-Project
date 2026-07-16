@@ -8,10 +8,8 @@ const dashboardScreen = {
       <div class="min-h-screen bg-background">
         <header class="bg-surface/80 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-5 h-16 sticky top-0 z-50">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl glass-card flex items-center justify-center">
-              <span class="material-symbols-outlined text-primary-container">account_balance</span>
-            </div>
-            <span class="text-headline-md font-semibold text-primary-fixed-dim">FinFlow</span>
+            <img src="images/logo_lifeos.png" class="w-10 h-10" alt="LifeOS Logo">
+            <span class="text-headline-md font-semibold text-primary-fixed-dim">${__('app.shortName')}</span>
           </div>
           <div class="flex items-center gap-4">
             <a href="#/alerts" class="relative p-2 rounded-full hover:bg-surface-bright/20 text-on-surface-variant">
@@ -34,22 +32,22 @@ const dashboardScreen = {
         <nav class="bg-surface-container/90 backdrop-blur-2xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/10 flex justify-around items-end pb-4 pt-2 px-4 h-20">
           <a href="#/" class="flex flex-col items-center justify-center text-primary-fixed-dim font-bold transition-all nav-link" data-route="/">
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">home</span>
-            <span class="text-label-sm">Home</span>
+            <span class="text-label-sm">${__('nav.home')}</span>
           </a>
           <a href="#/transactions" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/transactions">
             <span class="material-symbols-outlined">receipt_long</span>
-            <span class="text-label-sm">History</span>
+            <span class="text-label-sm">${__('nav.history')}</span>
           </a>
           <button id="fab-add" class="mb-4 bg-primary-container text-on-primary p-4 rounded-full center-button-glow active:scale-90 transition-all">
             <span class="material-symbols-outlined text-3xl">add</span>
           </button>
           <a href="#/budgets" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/budgets">
             <span class="material-symbols-outlined">account_balance_wallet</span>
-            <span class="text-label-sm">Budget</span>
+            <span class="text-label-sm">${__('nav.budget')}</span>
           </a>
           <a href="#/profile" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/profile">
             <span class="material-symbols-outlined">person</span>
-            <span class="text-label-sm">Profile</span>
+            <span class="text-label-sm">${__('nav.profile')}</span>
           </a>
         </nav>
       </div>
@@ -70,9 +68,9 @@ const dashboardScreen = {
       if (loading) {
         loading.innerHTML = `<div class="text-center py-12">
           <span class="material-symbols-outlined text-5xl text-error mb-4">error</span>
-          <p class="text-body-md text-on-surface-variant mb-2">Failed to load dashboard</p>
+          <p class="text-body-md text-on-surface-variant mb-2">${__('dashboard.failedToLoad')}</p>
           <p class="text-label-sm text-error">${escapeHtml(err.message)}</p>
-          <button onclick="location.reload()" class="mt-4 bg-primary-container text-on-primary px-5 py-2 rounded-full text-label-sm hover:brightness-110 transition-all">Retry</button>
+          <button onclick="location.reload()" class="mt-4 bg-primary-container text-on-primary px-5 py-2 rounded-full text-label-sm hover:brightness-110 transition-all">${__('dashboard.retry')}</button>
         </div>`;
       }
     }
@@ -96,7 +94,7 @@ const dashboardScreen = {
           </div>
           <div>
             <p class="text-body-md font-semibold">${escapeHtml(t.description)}</p>
-            <p class="text-label-sm text-on-surface-variant">${escapeHtml(t.category)} · ${escapeHtml(t.date)}</p>
+            <p class="text-label-sm text-on-surface-variant">${tc(t.category)} · ${escapeHtml(t.date)}</p>
           </div>
         </div>
         <p class="text-body-md font-bold ${t.type === 'INCOME' ? 'text-tertiary-fixed-dim' : ''}">
@@ -112,7 +110,7 @@ const dashboardScreen = {
           <div class="relative z-10">
             <div class="flex justify-between items-start mb-8">
               <div>
-                <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1">Total Available Balance</p>
+                <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1">${__('dashboard.totalBalance')}</p>
                 <h1 class="text-display text-primary">$${Number(data.totalBalance).toLocaleString()}</h1>
               </div>
               <div class="bg-primary-container/20 text-primary-container px-3 py-1 rounded-full text-label-sm flex items-center gap-1">
@@ -123,11 +121,11 @@ const dashboardScreen = {
             <div class="grid grid-cols-2 gap-4 mt-auto">
               <button id="btn-add-income" class="bg-primary-container text-on-primary text-label-md py-4 rounded-lg flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all">
                 <span class="material-symbols-outlined">add_circle</span>
-                Add Income
+                ${__('dashboard.addIncome')}
               </button>
               <button id="btn-add-expense" class="bg-surface-container-highest/50 border border-white/10 text-on-surface text-label-md py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all active:scale-95">
                 <span class="material-symbols-outlined">remove_circle</span>
-                Add Expense
+                ${__('dashboard.addExpense')}
               </button>
             </div>
           </div>
@@ -136,19 +134,19 @@ const dashboardScreen = {
 
       <section class="md:col-span-4">
         <div class="glass-card rounded-2xl p-6 h-full flex flex-col items-center justify-center text-center">
-          <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-6">This Month</p>
+          <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-6">${__('dashboard.thisMonth')}</p>
           <div class="grid grid-cols-2 gap-6 w-full">
             <div>
-              <p class="text-label-sm text-tertiary-fixed-dim mb-1">Income</p>
+              <p class="text-label-sm text-tertiary-fixed-dim mb-1">${__('dashboard.income')}</p>
               <p class="text-numerical-lg text-tertiary-fixed-dim">$${Number(data.monthlyIncome).toLocaleString()}</p>
             </div>
             <div>
-              <p class="text-label-sm text-on-surface-variant mb-1">Expenses</p>
+              <p class="text-label-sm text-on-surface-variant mb-1">${__('dashboard.expenses')}</p>
               <p class="text-numerical-lg text-on-surface">$${Number(data.monthlyExpenses).toLocaleString()}</p>
             </div>
           </div>
           <a href="#/goals" class="mt-6 text-label-md text-primary-container hover:underline flex items-center gap-1">
-            <span class="material-symbols-outlined text-[16px]">flag</span> View Goals
+            <span class="material-symbols-outlined text-[16px]">flag</span> ${__('dashboard.viewGoals')}
           </a>
         </div>
       </section>
@@ -156,7 +154,7 @@ const dashboardScreen = {
       <section class="md:col-span-12 lg:col-span-7">
         <div class="glass-card rounded-2xl p-6">
           <div class="flex justify-between items-center mb-8">
-            <h3 class="text-headline-md">Analytics</h3>
+            <h3 class="text-headline-md">${__('dashboard.analytics')}</h3>
           </div>
           <div class="h-64 w-full flex items-end justify-between gap-2 px-2" id="chart-bars">
             ${(() => {
@@ -181,11 +179,11 @@ const dashboardScreen = {
       <section class="md:col-span-12 lg:col-span-5">
         <div class="glass-card rounded-2xl p-6 h-full">
           <div class="flex justify-between items-center mb-6">
-            <h3 class="text-headline-md">Activity</h3>
-            <a href="#/transactions" class="text-primary-container text-label-sm hover:underline">View All</a>
+            <h3 class="text-headline-md">${__('dashboard.activity')}</h3>
+            <a href="#/transactions" class="text-primary-container text-label-sm hover:underline">${__('dashboard.viewAll')}</a>
           </div>
           <div class="space-y-4">
-            ${recentHtml || '<p class="text-on-surface-variant text-body-md text-center py-8">No transactions yet</p>'}
+            ${recentHtml || '<p class="text-on-surface-variant text-body-md text-center py-8">' + __('dashboard.noTransactions') + '</p>'}
           </div>
         </div>
       </section>

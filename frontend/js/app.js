@@ -1,4 +1,6 @@
-(function() {
+(async function() {
+  await i18n.init();
+
   const token = localStorage.getItem('token');
 
   if (!token) {
