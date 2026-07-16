@@ -1,0 +1,6 @@
+opencode.json
+.env
+target/
+.vscode/
+.idea/
+node_modules/
