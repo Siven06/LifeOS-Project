@@ -8,6 +8,7 @@
     "home": "Home",
     "history": "History",
     "budget": "Budget",
+    "debts": "Debts",
     "profile": "Profile",
     "alerts": "Alerts"
   },
@@ -40,6 +41,7 @@
     "viewAll": "View All",
     "viewGoals": "View Goals",
     "noTransactions": "No transactions yet",
+    "noData": "No data available",
     "failedToLoad": "Failed to load dashboard",
     "retry": "Retry"
   },
@@ -170,5 +172,65 @@
   },
   "time": {
     "justNow": "just now"
+  },
+  "debts": {
+    "title": "Debts & Loans",
+    "addDebt": "Add Debt",
+    "noDebts": "No debts recorded",
+    "noDebtsHint": "Add your debts to track payments",
+    "failedToLoad": "Failed to load debts",
+    "name": "Name",
+    "namePlaceholder": "e.g. Car Loan",
+    "type": "Type",
+    "totalAmount": "Total Amount ($)",
+    "monthlyPayment": "Monthly Payment ($)",
+    "dueDay": "Due Day",
+    "startDate": "Start Date",
+    "endDate": "End Date (optional)",
+    "interestRate": "Interest Rate (%)",
+    "category": "Category",
+    "note": "Note (optional)",
+    "notePlaceholder": "Additional details",
+    "createDebt": "Create Debt",
+    "debtCreated": "Debt created",
+    "debtUpdated": "Debt updated",
+    "debtDeleted": "Debt deleted",
+    "makePayment": "Record Payment",
+    "paymentAmount": "Payment Amount ($)",
+    "paymentSuccess": "Payment recorded",
+    "summary": "Debt Summary",
+    "totalDebt": "Total Debt",
+    "monthlyPayment": "Monthly Payment",
+    "activeDebts": "Active Debts",
+    "nextPayment": "Next Payment",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this debt?",
+    "remaining": "Remaining:",
+    "progress": "Progress:",
+    "types": {
+      "PERSONAL_LOAN": "Personal Loan",
+      "MORTGAGE": "Mortgage",
+      "AUTO_LOAN": "Auto Loan",
+      "STUDENT_LOAN": "Student Loan",
+      "CREDIT_CARD": "Credit Card",
+      "FAMILY_FRIEND": "Family/Friend",
+      "OTHER": "Other"
+    },
+    "categories": {
+      "HOUSING": "Housing",
+      "TRANSPORTATION": "Transportation",
+      "EDUCATION": "Education",
+      "PERSONAL": "Personal",
+      "MEDICAL": "Medical",
+      "BUSINESS": "Business",
+      "OTHER": "Other"
+    },
+    "statuses": {
+      "ACTIVE": "Active",
+      "PAID_OFF": "Paid Off",
+      "OVERDUE": "Overdue",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

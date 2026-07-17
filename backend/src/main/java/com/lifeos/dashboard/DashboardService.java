@@ -3,6 +3,7 @@ package com.lifeos.dashboard;
 import com.lifeos.dashboard.dto.DashboardResponse;
 import com.lifeos.dashboard.dto.MonthlyDataPoint;
 import com.lifeos.alert.AlertRepository;
+import com.lifeos.debt.DebtService;
 import com.lifeos.transaction.MonthlySummary;
 import com.lifeos.transaction.TransactionRepository;
 import com.lifeos.transaction.TransactionType;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.*;
 
 @Service
@@ -27,6 +27,7 @@ public class DashboardService {
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
     private final AlertRepository alertRepository;
+    private final DebtService debtService;
 
     public DashboardResponse getDashboard(String userId) {
         User user = userRepository.findById(userId).orElseThrow();
@@ -66,6 +67,12 @@ public class DashboardService {
 
         long alertsUnreadCount = alertRepository.countByUserIdAndDismissedFalse(userId);
 
+        // Debt summary
+        BigDecimal totalDebt = debtService.getTotalDebt(userId);
+        BigDecimal monthlyDebtPayment = debtService.getMonthlyDebtPayment(userId);
+        int activeDebtsCount = debtService.getActiveDebtsCount(userId);
+        var nextPayment = debtService.getNextPayment(userId);
+
         return DashboardResponse.builder()
                 .totalBalance(user.getTotalBalance())
                 .monthlyIncome(monthlyIncome)
@@ -74,6 +81,11 @@ public class DashboardService {
                 .monthlyChart(monthlyChart)
                 .recentTransactions(recentTransactions)
                 .alertsUnreadCount(alertsUnreadCount)
+                .totalDebt(totalDebt)
+                .monthlyDebtPayment(monthlyDebtPayment)
+                .activeDebtsCount(activeDebtsCount)
+                .nextDebtPaymentAmount(nextPayment != null ? nextPayment.getMonthlyPayment() : BigDecimal.ZERO)
+                .nextDebtPaymentDate(nextPayment != null ? now.withDayOfMonth(nextPayment.getDueDay()) : null)
                 .build();
     }
 

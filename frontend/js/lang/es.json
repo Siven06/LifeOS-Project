@@ -8,6 +8,7 @@
     "home": "Inicio",
     "history": "Historial",
     "budget": "Presupuesto",
+    "debts": "Deudas",
     "profile": "Perfil",
     "alerts": "Alertas"
   },
@@ -40,6 +41,7 @@
     "viewAll": "Ver Todo",
     "viewGoals": "Ver Metas",
     "noTransactions": "Sin transacciones aún",
+    "noData": "Sin datos disponibles",
     "failedToLoad": "Error al cargar el panel",
     "retry": "Reintentar"
   },
@@ -170,5 +172,65 @@
   },
   "time": {
     "justNow": "justo ahora"
+  },
+  "debts": {
+    "title": "Deudas y Préstamos",
+    "addDebt": "Agregar Deuda",
+    "noDebts": "Sin deudas registradas",
+    "noDebtsHint": "Agrega tus deudas para hacer seguimiento de tus pagos",
+    "failedToLoad": "Error al cargar deudas",
+    "name": "Nombre",
+    "namePlaceholder": "ej. Préstamo Auto",
+    "type": "Tipo",
+    "totalAmount": "Monto Total ($)",
+    "monthlyPayment": "Cuota Mensual ($)",
+    "dueDay": "Día de Pago",
+    "startDate": "Fecha Inicio",
+    "endDate": "Fecha Fin (opcional)",
+    "interestRate": "Tasa de Interés (%)",
+    "category": "Categoría",
+    "note": "Nota (opcional)",
+    "notePlaceholder": "Detalles adicionales",
+    "createDebt": "Crear Deuda",
+    "debtCreated": "Deuda creada",
+    "debtUpdated": "Deuda actualizada",
+    "debtDeleted": "Deuda eliminada",
+    "makePayment": "Registrar Pago",
+    "paymentAmount": "Monto del Pago ($)",
+    "paymentSuccess": "Pago registrado",
+    "summary": "Resumen de Deudas",
+    "totalDebt": "Deuda Total",
+    "monthlyPayment": "Pago Mensual",
+    "activeDebts": "Deudas Activas",
+    "nextPayment": "Próximo Pago",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Eliminar esta deuda?",
+    "remaining": "Pendiente:",
+    "progress": "Progreso:",
+    "types": {
+      "PERSONAL_LOAN": "Préstamo Personal",
+      "MORTGAGE": "Hipoteca",
+      "AUTO_LOAN": "Préstamo Auto",
+      "STUDENT_LOAN": "Préstamo Estudiantil",
+      "CREDIT_CARD": "Tarjeta de Crédito",
+      "FAMILY_FRIEND": "Familiar/Amigo",
+      "OTHER": "Otro"
+    },
+    "categories": {
+      "HOUSING": "Vivienda",
+      "TRANSPORTATION": "Transporte",
+      "EDUCATION": "Educación",
+      "PERSONAL": "Personal",
+      "MEDICAL": "Médico",
+      "BUSINESS": "Negocio",
+      "OTHER": "Otro"
+    },
+    "statuses": {
+      "ACTIVE": "Activa",
+      "PAID_OFF": "Pagada",
+      "OVERDUE": "Vencida",
+      "CANCELLED": "Cancelada"
+    }
   }
 }

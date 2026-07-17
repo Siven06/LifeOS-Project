@@ -151,5 +151,32 @@ const api = {
     dismissAll() {
       return api.post('/alerts/dismiss-all');
     }
+  },
+
+  debts: {
+    list() {
+      return api.get('/debts');
+    },
+    getActive() {
+      return api.get('/debts/active');
+    },
+    getSummary() {
+      return api.get('/debts/summary');
+    },
+    get(id) {
+      return api.get(`/debts/${id}`);
+    },
+    create(data) {
+      return api.post('/debts', data);
+    },
+    update(id, data) {
+      return api.put(`/debts/${id}`, data);
+    },
+    delete(id) {
+      return api.del(`/debts/${id}`);
+    },
+    makePayment(id, amount) {
+      return api.post(`/debts/${id}/payment`, { amount });
+    }
   }
 };

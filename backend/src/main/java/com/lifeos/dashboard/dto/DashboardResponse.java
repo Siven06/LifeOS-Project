@@ -1,11 +1,11 @@
 package com.lifeos.dashboard.dto;
 
-import com.lifeos.transaction.MonthlySummary;
 import com.lifeos.transaction.dto.TransactionResponse;
 import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,4 +19,10 @@ public class DashboardResponse {
     private List<MonthlyDataPoint> monthlyChart;
     private List<TransactionResponse> recentTransactions;
     private long alertsUnreadCount;
+
+    private BigDecimal totalDebt;
+    private BigDecimal monthlyDebtPayment;
+    private int activeDebtsCount;
+    private BigDecimal nextDebtPaymentAmount;
+    private LocalDate nextDebtPaymentDate;
 }

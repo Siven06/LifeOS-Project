@@ -33,6 +33,7 @@ class Router {
   }
 
   start() {
+    this.currentRoute = null;
     this.resolve();
   }
 
