@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="dark" lang="es">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>LifeOS - Personal Finance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0A0A0B" />
+  <title>LifeOS - Finanzas Personales</title>
+  
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/styles.css"/>
+  
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -18,62 +21,74 @@
             surface: "#131314",
             "surface-dim": "#131314",
             "surface-bright": "#3a393a",
-            "surface-container": "#201f20",
+            "surface-container": "#1C1C1E",
             "surface-container-low": "#1c1b1c",
-            "surface-container-high": "#2a2a2b",
+            "surface-container-high": "#2C2C2E",
             "surface-container-highest": "#353436",
             "surface-container-lowest": "#0e0e0f",
-            "on-surface": "#e5e2e3",
-            "on-surface-variant": "#b9caca",
-            primary: "#e9feff",
-            "primary-container": "#00f5ff",
-            "on-primary": "#003739",
+            "on-surface": "#E8E8E8",
+            "on-surface-variant": "#8E8E93",
+            primary: "#E0F7FA",
+            "primary-container": "#00B8D4",
+            "on-primary": "#00363A",
             "on-primary-container": "#006c71",
             "primary-fixed": "#63f7ff",
-            "primary-fixed-dim": "#00dce5",
-            secondary: "#d1bcff",
-            "secondary-container": "#7000ff",
+            "primary-fixed-dim": "#00A3B4",
+            secondary: "#D1C4E9",
+            "secondary-container": "#6200EA",
             "on-secondary": "#3c0090",
             "on-secondary-container": "#ddcdff",
             tertiary: "#ecffea",
             "tertiary-container": "#3bfc89",
             "tertiary-fixed-dim": "#00e475",
             "on-tertiary": "#003918",
-            error: "#ffb4ab",
+            success: "#69F0AE",
+            "success-container": "#1B5E20",
+            danger: "#FF8A80",
+            "danger-container": "#B71C1C",
+            error: "#FF8A80",
             "error-container": "#93000a",
-            outline: "#849495",
-            "outline-variant": "#3a494a",
-            "surface-tint": "#00dce5"
+            outline: "rgba(255,255,255,0.1)",
+            "outline-variant": "rgba(255,255,255,0.05)",
+            "surface-tint": "#00A3B4"
           },
           borderRadius: {
-            DEFAULT: "0.25rem",
-            lg: "0.5rem",
-            xl: "0.75rem",
-            "2xl": "1rem",
+            DEFAULT: "8px",
+            lg: "12px",
+            xl: "16px",
+            "2xl": "24px",
             full: "9999px"
           },
           fontFamily: {
-            sans: ["Inter", "sans-serif"],
+            sans: ["Inter", "system-ui", "sans-serif"],
+            mono: ["JetBrains Mono", "SF Mono", "monospace"],
             display: ["Inter", "sans-serif"],
-            "numerical-lg": ["Inter", "sans-serif"]
+            "numerical-lg": ["JetBrains Mono", "monospace"]
           },
           fontSize: {
-            display: ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            display: ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
             "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
             "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
             "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
             "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
             "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "500" }],
             "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
-            "numerical-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }]
+            "numerical-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700", fontVariantNumeric: "tabular-nums" }],
+            "numerical-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "700", fontVariantNumeric: "tabular-nums" }]
+          },
+          boxShadow: {
+            'card': '0 1px 3px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05)',
+            'elevated': '0 8px 24px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05)',
+            'glow': '0 0 20px rgba(0,184,212,0.3)'
           }
         }
       }
     }
   </script>
 </head>
-<body class="bg-background text-on-surface min-h-screen font-sans">
+<body class="bg-background text-on-surface min-h-screen font-sans antialiased">
   <div id="app"></div>
+  
   <script src="js/utils.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/api.js"></script>

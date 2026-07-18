@@ -36,30 +36,59 @@ const dashboardScreen = {
           <div id="dashboard-content" class="hidden grid grid-cols-1 md:grid-cols-12 gap-6"></div>
         </main>
 
-        <nav class="bg-surface-container/90 backdrop-blur-2xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/10 flex justify-around items-end pb-4 pt-2 px-4 h-20">
-          <a href="#/" class="flex flex-col items-center justify-center text-primary-fixed-dim font-bold transition-all nav-link" data-route="/">
-            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">home</span>
-            <span class="text-label-sm">${__('nav.home')}</span>
-          </a>
-          <a href="#/transactions" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/transactions">
-            <span class="material-symbols-outlined">receipt_long</span>
-            <span class="text-label-sm">${__('nav.history')}</span>
-          </a>
-          <button id="fab-add" class="mb-4 bg-primary-container text-on-primary p-4 rounded-full center-button-glow active:scale-90 transition-all">
-            <span class="material-symbols-outlined text-3xl">add</span>
-          </button>
-          <a href="#/budgets" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/budgets">
-            <span class="material-symbols-outlined">account_balance_wallet</span>
-            <span class="text-label-sm">${__('nav.budget')}</span>
-          </a>
-          <a href="#/debts" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/debts">
-            <span class="material-symbols-outlined">credit_score</span>
-            <span class="text-label-sm">${__('nav.debts')}</span>
-          </a>
-          <a href="#/profile" class="flex flex-col items-center justify-center text-on-surface-variant transition-all nav-link" data-route="/profile">
-            <span class="material-symbols-outlined">person</span>
-            <span class="text-label-sm">${__('nav.profile')}</span>
-          </a>
+        <nav class="bg-surface-container/90 backdrop-blur-2xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/10 h-[72px]">
+          <div class="max-w-lg mx-auto h-full flex items-stretch px-2 relative">
+            <a href="#/" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-primary-fixed-dim font-bold transition-all nav-link relative group" data-route="/">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">home</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.home')}</span>
+              </div>
+              <div class="absolute -top-px left-1/4 right-1/4 h-[3px] bg-primary-container rounded-full nav-indicator opacity-100"></div>
+            </a>
+            <a href="#/transactions" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/transactions">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">receipt_long</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.history')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <div class="flex items-center justify-center flex-[0.8] relative">
+              <button id="fab-add" class="absolute -top-5 bg-primary-container text-on-primary w-12 h-12 rounded-full center-button-glow active:scale-90 hover:scale-105 transition-all shadow-lg shadow-primary-container/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">add</span>
+              </button>
+            </div>
+            <a href="#/budgets" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/budgets">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.budget')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/debts" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/debts">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">credit_score</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.debts')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/profile" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/profile">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">person</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.profile')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+          </div>
         </nav>
       </div>
     `;

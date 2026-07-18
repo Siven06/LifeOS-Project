@@ -44,9 +44,15 @@ class Router {
   updateNavHighlight() {
     document.querySelectorAll('.nav-link').forEach(link => {
       const route = link.dataset.route;
-      link.classList.toggle('text-primary-fixed-dim', route === this.currentRoute);
-      link.classList.toggle('font-bold', route === this.currentRoute);
-      if (route === this.currentRoute) {
+      const isActive = route === this.currentRoute;
+      link.classList.toggle('text-primary-fixed-dim', isActive);
+      link.classList.toggle('font-bold', isActive);
+      const indicator = link.querySelector('.nav-indicator');
+      if (indicator) {
+        indicator.classList.toggle('opacity-100', isActive);
+        indicator.classList.toggle('opacity-0', !isActive);
+      }
+      if (isActive) {
         link.querySelector('.material-symbols-outlined')?.style.setProperty('font-variation-settings', "'FILL' 1");
       } else {
         link.querySelector('.material-symbols-outlined')?.style.removeProperty('font-variation-settings');

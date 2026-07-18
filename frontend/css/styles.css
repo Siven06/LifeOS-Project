@@ -1,3 +1,4 @@
+/* === TUS ESTILOS ORIGINALES (sin tocar) === */
 .glass-card {
   background: rgba(22, 22, 24, 0.8);
   backdrop-filter: blur(20px);
@@ -73,4 +74,125 @@ body {
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* === NUEVOS ESTILOS DEL REDISEÑO === */
+
+/* Background grid pattern */
+.bg-grid {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Tabular numbers for currency alignment */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Glass effect for header/nav */
+.glass-header {
+  background: rgba(10, 10, 11, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Card hover lift effect */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Chart area gradient */
+.chart-area {
+  background: linear-gradient(180deg, rgba(0, 184, 212, 0.15) 0%, rgba(0, 184, 212, 0) 100%);
+}
+
+/* Progress bar gradient (income to expense) */
+.progress-gradient {
+  background: linear-gradient(90deg, #69F0AE 0%, #69F0AE 85%, #FF8A80 85%, #FF8A80 100%);
+}
+
+/* Glow effect for primary elements */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(0, 184, 212, 0.3);
+}
+
+/* Navigation pill active state */
+.nav-pill-active {
+  background: rgba(0, 184, 212, 0.15);
+  color: #00B8D4;
+}
+
+/* Transaction category icon backgrounds */
+.icon-income {
+  background: rgba(105, 240, 174, 0.1);
+  color: #69F0AE;
+}
+.icon-expense {
+  background: rgba(255, 138, 128, 0.1);
+  color: #FF8A80;
+}
+.icon-shopping {
+  background: rgba(0, 184, 212, 0.1);
+  color: #00B8D4;
+}
+
+/* Smooth transitions utility */
+.transition-all-200 {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* FAB positioning above nav */
+.fab-container {
+  position: relative;
+  margin-top: -28px;
+  z-index: 10;
+}
+
+/* Elevated shadow for cards */
+.shadow-elevated {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Card shadow with subtle border */
+.shadow-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Updated center button glow with new cyan */
+.center-button-glow-new {
+  box-shadow: 0 0 20px rgba(0, 184, 212, 0.4);
+}
+
+/* Smooth scrollbar for webkit */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Antialiased text */
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Truncate text */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Min width zero for flex children */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* Font mono for JetBrains */
+.font-mono {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
 }
