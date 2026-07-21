@@ -144,7 +144,7 @@ const dashboardScreen = {
           <div class="flex justify-between items-start mb-8">
             <div>
               <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1">${__('dashboard.totalBalance')}</p>
-              <h1 class="text-display text-primary">$${Number(data.totalBalance).toLocaleString()}</h1>
+              <h1 class="text-display text-primary">${formatCurrency(data.totalBalance)}</h1>
             </div>
             <div class="bg-primary-container/20 text-primary-container px-3 py-1 rounded-full text-label-sm flex items-center gap-1">
               <span class="material-symbols-outlined text-[16px]">trending_up</span>
@@ -172,11 +172,11 @@ const dashboardScreen = {
         <div class="grid grid-cols-2 gap-6 w-full">
           <div>
             <p class="text-label-sm text-tertiary-fixed-dim mb-1">${__('dashboard.income')}</p>
-            <p class="text-numerical-lg text-tertiary-fixed-dim">$${Number(data.monthlyIncome).toLocaleString()}</p>
+            <p class="text-numerical-lg text-tertiary-fixed-dim">${formatCurrency(data.monthlyIncome)}</p>
           </div>
           <div>
             <p class="text-label-sm text-on-surface-variant mb-1">${__('dashboard.expenses')}</p>
-            <p class="text-numerical-lg text-on-surface">$${Number(data.monthlyExpenses).toLocaleString()}</p>
+            <p class="text-numerical-lg text-on-surface">${formatCurrency(data.monthlyExpenses)}</p>
           </div>
         </div>
         <a href="#/goals" class="mt-6 text-label-md text-primary-container hover:underline flex items-center gap-1">
@@ -223,7 +223,7 @@ const dashboardScreen = {
           </div>
         </div>
         <p class="text-body-md font-bold ${t.type === 'INCOME' ? 'text-tertiary-fixed-dim' : ''}">
-          ${t.type === 'INCOME' ? '+' : '-'}$${Number(t.amount).toLocaleString()}
+          ${formatCurrencySign(t.amount, t.type)}
         </p>
       </div>
     `).join('');
@@ -269,7 +269,7 @@ const dashboardScreen = {
             </div>
             <div class="min-w-0">
               <p class="text-label-sm text-on-surface-variant truncate">${__('debts.totalDebt')}</p>
-              <p class="text-body-md font-bold text-secondary">$${Number(data.totalDebt).toLocaleString()}</p>
+              <p class="text-body-md font-bold text-secondary">${formatCurrency(data.totalDebt)}</p>
             </div>
           </div>
           <div class="flex items-center gap-4 p-4 bg-surface-container-highest/50 rounded-xl">
@@ -278,7 +278,7 @@ const dashboardScreen = {
             </div>
             <div class="min-w-0">
               <p class="text-label-sm text-on-surface-variant truncate">${__('debts.monthlyPayment')}</p>
-              <p class="text-body-md font-bold text-primary-container">$${Number(data.monthlyDebtPayment).toLocaleString()}</p>
+              <p class="text-body-md font-bold text-primary-container">${formatCurrency(data.monthlyDebtPayment)}</p>
             </div>
           </div>
           <div class="flex items-center gap-4 p-4 bg-surface-container-highest/50 rounded-xl">
@@ -297,7 +297,7 @@ const dashboardScreen = {
             <span class="material-symbols-outlined text-primary-container">event</span>
             <div>
               <p class="text-label-sm text-on-surface-variant">${__('debts.nextPayment')}</p>
-              <p class="text-body-md font-bold text-primary-container">$${Number(data.nextDebtPaymentAmount).toLocaleString()}</p>
+              <p class="text-body-md font-bold text-primary-container">${formatCurrency(data.nextDebtPaymentAmount)}</p>
             </div>
           </div>
           <span class="text-label-sm text-on-surface-variant">${data.nextDebtPaymentDate ? new Date(data.nextDebtPaymentDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) : ''}</span>

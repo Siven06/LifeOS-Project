@@ -14,9 +14,9 @@ class Router {
     window.location.hash = path;
   }
 
-  resolve() {
+  resolve(force = false) {
     const hash = window.location.hash.slice(1) || '/';
-    if (this.currentRoute === hash) return;
+    if (!force && this.currentRoute === hash) return;
     this.currentRoute = hash;
 
     if (this.routes[hash]) {

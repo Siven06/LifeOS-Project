@@ -96,6 +96,9 @@ const api = {
     },
     delete(id) {
       return api.del(`/transactions/${id}`);
+    },
+    summary() {
+      return api.get('/transactions/summary');
     }
   },
 

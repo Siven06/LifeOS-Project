@@ -107,7 +107,7 @@ const transactionModal = {
         }
 
         overlay.remove();
-        router.resolve();
+        router.resolve(true);
       } catch (err) {
         const errorEl = overlay.querySelector('#modal-error');
         errorEl.textContent = err.message;

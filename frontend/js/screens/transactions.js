@@ -1,6 +1,7 @@
 const transactionsScreen = {
   async render() {
     const app = document.getElementById('app');
+
     app.innerHTML = `
       <div class="min-h-screen bg-background pb-32">
         <header class="bg-surface/80 backdrop-blur-xl border-b border-white/10 flex items-center px-5 h-16 sticky top-0 z-50 gap-4">
@@ -32,19 +33,80 @@ const transactionsScreen = {
             ).join('')}
           </div>
 
-          <div id="transactions-list" class="space-y-3">
+          <div id="transactions-list" class="space-y-1">
             <div class="flex items-center justify-center py-12">
               <span class="material-symbols-outlined animate-spin text-primary-container text-3xl">sync</span>
             </div>
           </div>
+
+          <div id="summary-section" class="mt-8 space-y-4 hidden"></div>
         </main>
+
+        <nav class="bg-surface-container/90 backdrop-blur-2xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/10 h-[72px]">
+          <div class="max-w-lg mx-auto h-full flex items-stretch px-2 relative">
+            <a href="#/" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">home</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.home')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/transactions" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-primary-fixed-dim font-bold transition-all nav-link relative group" data-route="/transactions">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">receipt_long</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.history')}</span>
+              </div>
+              <div class="absolute -top-px left-1/4 right-1/4 h-[3px] bg-primary-container rounded-full nav-indicator opacity-100"></div>
+            </a>
+            <div class="flex items-center justify-center flex-[0.8] relative">
+              <button id="fab-add-tx" class="absolute -top-5 bg-primary-container text-on-primary w-12 h-12 rounded-full center-button-glow active:scale-90 hover:scale-105 transition-all shadow-lg shadow-primary-container/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">add</span>
+              </button>
+            </div>
+            <a href="#/budgets" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/budgets">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.budget')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/debts" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/debts">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">credit_score</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.debts')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/profile" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/profile">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">person</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.profile')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+          </div>
+        </nav>
       </div>
     `;
 
     this.currentFilter = '';
     this.currentCategory = '';
     this.searchTerm = '';
+    this.allTransactions = [];
+    this.summaryData = null;
+
     await this.loadTransactions();
+    this.loadSummary();
 
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
@@ -70,11 +132,12 @@ const transactionsScreen = {
 
     document.getElementById('tx-search')?.addEventListener('input', (e) => {
       this.searchTerm = e.target.value.toLowerCase();
-      this.applyClientFilter();
+      this.renderTransactions();
     });
 
     document.getElementById('btn-export')?.addEventListener('click', () => this.exportCSV());
     document.getElementById('btn-export-pdf')?.addEventListener('click', () => this.exportPDF());
+    document.getElementById('fab-add-tx')?.addEventListener('click', () => transactionModal.show('create'));
   },
 
   async loadTransactions() {
@@ -83,14 +146,23 @@ const transactionsScreen = {
       const params = {};
       if (this.currentFilter) params.type = this.currentFilter;
       const res = await api.transactions.list(params);
-      this.allTransactions = res.data;
-      this.applyClientFilter();
+      this.allTransactions = res.data || [];
+      this.renderTransactions();
     } catch (err) {
       list.innerHTML = `<p class="text-center text-error text-body-md py-12">${__('transactions.failedToLoad')}</p>`;
     }
   },
 
-  applyClientFilter() {
+  async loadSummary() {
+    try {
+      const res = await api.transactions.summary();
+      this.summaryData = res.data;
+      this.renderSummary();
+    } catch (err) {
+    }
+  },
+
+  renderTransactions() {
     const list = document.getElementById('transactions-list');
     let filtered = this.allTransactions || [];
 
@@ -107,28 +179,264 @@ const transactionsScreen = {
 
     if (filtered.length === 0) {
       list.innerHTML = `<p class="text-center text-on-surface-variant text-body-md py-12">${__('transactions.noTransactions')}</p>`;
+      this.attachCardEvents();
       return;
     }
 
-    list.innerHTML = filtered.map(t => `
-      <div class="glass-card rounded-xl p-4 flex items-center justify-between slide-up">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full flex items-center justify-center ${t.type === 'INCOME' ? 'bg-tertiary-fixed-dim/10 text-tertiary-fixed-dim' : 'bg-secondary/10 text-secondary'}">
-            <span class="material-symbols-outlined">${t.type === 'INCOME' ? 'payments' : 'shopping_bag'}</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <p class="text-body-md font-semibold">${escapeHtml(t.description)}</p>
-              ${t.status === 'PENDING' ? '<span class="text-label-sm text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">' + __('transactions.pending') + '</span>' : ''}
-            </div>
-            <p class="text-label-sm text-on-surface-variant">${tc(t.category)} · ${escapeHtml(t.date)}</p>
-          </div>
+    const groups = this.groupByDate(filtered);
+    list.innerHTML = groups.map(group => `
+      <div class="mb-6">
+        <div class="flex items-center gap-3 mb-3 mt-2">
+          <span class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider">${escapeHtml(group.label)}</span>
+          <div class="flex-1 h-px bg-white/5"></div>
+          <span class="text-label-sm text-on-surface-variant">${group.transactions.length} items</span>
         </div>
-        <p class="text-body-md font-bold ${t.type === 'INCOME' ? 'text-tertiary-fixed-dim' : ''}">
-          ${t.type === 'INCOME' ? '+' : '-'}$${Number(t.amount).toLocaleString()}
-        </p>
+        <div class="space-y-2">
+          ${group.transactions.map(t => this.renderTransactionCard(t)).join('')}
+        </div>
       </div>
     `).join('');
+    this.attachCardEvents();
+  },
+
+  groupByDate(transactions) {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const formatDate = (d) => {
+      const date = new Date(d + 'T00:00:00');
+      const todayStr = today.toISOString().split('T')[0];
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+      const dateStr = date.toISOString().split('T')[0];
+
+      if (dateStr === todayStr) return __('transactions.today');
+      if (dateStr === yesterdayStr) return __('transactions.yesterday');
+
+      return date.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
+    };
+
+    const groups = {};
+    transactions.forEach(t => {
+      const key = t.date || 'unknown';
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(t);
+    });
+
+    const sortedKeys = Object.keys(groups).sort((a, b) => new Date(b) - new Date(a));
+    return sortedKeys.map(key => ({
+      label: formatDate(key),
+      date: key,
+      transactions: groups[key]
+    }));
+  },
+
+  renderTransactionCard(t) {
+    const catIcons = {
+      FOOD: 'restaurant', TRANSPORT: 'directions_car', SHOPPING: 'shopping_bag',
+      ENTERTAINMENT: 'movie', BILLS: 'receipt', HEALTH: 'local_hospital',
+      SALARY: 'payments', FREELANCE: 'computer', INVESTMENT: 'trending_up',
+      EDUCATION: 'school', OTHER: 'more_horiz'
+    };
+    const icon = catIcons[t.category] || (t.type === 'INCOME' ? 'payments' : 'shopping_bag');
+    const isExpense = t.type === 'EXPENSE';
+    const time = t.createdAt ? new Date(t.createdAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
+
+    return `
+      <div class="tx-card glass-card rounded-xl p-4 flex items-center justify-between cursor-pointer hover:bg-surface-container/80 transition-all slide-up" data-id="${escapeAttr(t.id)}">
+        <div class="flex items-center gap-4 min-w-0 flex-1">
+          <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 ${t.type === 'INCOME' ? 'bg-tertiary-fixed-dim/10 text-tertiary-fixed-dim' : 'bg-secondary/10 text-secondary'}">
+            <span class="material-symbols-outlined text-[20px]">${icon}</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <p class="text-body-md font-semibold truncate">${escapeHtml(t.description)}</p>
+              ${t.status === 'PENDING' ? '<span class="text-label-sm text-secondary bg-secondary/10 px-2 py-0.5 rounded-full flex-shrink-0">' + __('transactions.pending') + '</span>' : ''}
+            </div>
+            <div class="flex items-center gap-2 mt-0.5">
+              <span class="text-label-sm text-on-surface-variant">${tc(t.category)}</span>
+              <span class="text-label-sm text-on-surface-variant/50">·</span>
+              <span class="text-label-sm text-on-surface-variant">${escapeHtml(t.date)}</span>
+              ${time ? `<span class="text-label-sm text-on-surface-variant/50">${escapeHtml(time)}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0 ml-3">
+          <p class="text-body-md font-bold tabular-nums ${t.type === 'INCOME' ? 'text-tertiary-fixed-dim' : ''}">
+            ${formatCurrencySign(t.amount, t.type)}
+          </p>
+          <button class="tx-menu-btn material-symbols-outlined text-on-surface-variant/60 hover:text-on-surface-variant p-1 rounded-full hover:bg-white/5 transition-all text-[18px]" data-id="${escapeAttr(t.id)}">more_vert</button>
+        </div>
+      </div>
+    `;
+  },
+
+  renderSummary() {
+    const section = document.getElementById('summary-section');
+    const s = this.summaryData;
+    if (!s) return;
+
+    const changePercent = Number(s.expenseChangePercent || 0);
+    const isLower = changePercent <= 0;
+    const percentText = Math.abs(changePercent).toFixed(1);
+    const trendText = isLower
+      ? __('transactions.expensesLower').replace('{{percent}}', percentText)
+      : __('transactions.expensesHigher').replace('{{percent}}', percentText);
+    const trendIcon = isLower ? 'trending_down' : 'trending_up';
+    const trendColor = isLower ? 'text-tertiary-fixed-dim' : 'text-error';
+
+    const topCat = s.topCategory;
+    const breakdown = s.categoryBreakdown || [];
+
+    section.classList.remove('hidden');
+    section.innerHTML = `
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-headline-md font-semibold">${__('transactions.spendingSummary')}</span>
+        <div class="flex-1 h-px bg-white/5"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div class="glass-card rounded-xl p-4">
+          <p class="text-label-sm text-on-surface-variant mb-1">${__('transactions.monthlyExpenses')}</p>
+          <p class="text-body-md font-bold tabular-nums">${formatCurrency(s.monthlyExpenses || 0)}</p>
+          <div class="flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-[14px] ${trendColor}">${trendIcon}</span>
+            <span class="text-label-sm ${trendColor}">${trendText}</span>
+          </div>
+        </div>
+        <div class="glass-card rounded-xl p-4">
+          <p class="text-label-sm text-on-surface-variant mb-1">${__('transactions.monthlyIncome')}</p>
+          <p class="text-body-md font-bold text-tertiary-fixed-dim tabular-nums">${formatCurrency(s.monthlyIncome || 0)}</p>
+        </div>
+      </div>
+
+      ${topCat ? `
+      <div class="glass-card rounded-xl p-4 mb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-secondary text-[20px]">${catIcon(topCat.category)}</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-label-sm text-on-surface-variant">${__('transactions.topCategory')}</p>
+            <p class="text-body-md font-semibold">${tc(topCat.category)}</p>
+            <div class="w-full bg-white/5 rounded-full h-1.5 mt-1.5">
+              <div class="bg-secondary h-1.5 rounded-full transition-all" style="width:${Math.min(topCat.percentage, 100)}%"></div>
+            </div>
+            <p class="text-label-sm text-on-surface-variant mt-0.5">${topCat.percentage.toFixed(1)}% ${__('transactions.ofTotalSpending')}</p>
+          </div>
+          <p class="text-body-md font-bold tabular-nums">${formatCurrency(topCat.total)}</p>
+        </div>
+      </div>` : ''}
+
+      ${breakdown.length > 1 ? `
+      <div class="glass-card rounded-xl p-4 mb-3">
+        <p class="text-label-sm text-on-surface-variant mb-3">${__('transactions.all')} (${__('transactions.expenses')})</p>
+        <div class="space-y-2.5">
+          ${breakdown.map(c => `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-surface-container-high/50 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-on-surface-variant text-[16px]">${catIcon(c.category)}</span>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex justify-between items-center mb-0.5">
+                <span class="text-label-sm">${tc(c.category)}</span>
+                <span class="text-label-sm text-on-surface-variant">${c.percentage.toFixed(1)}%</span>
+              </div>
+              <div class="w-full bg-white/5 rounded-full h-1">
+                <div class="bg-primary-container/60 h-1 rounded-full transition-all" style="width:${Math.min(c.percentage, 100)}%"></div>
+              </div>
+            </div>
+          </div>
+          `).join('')}
+        </div>
+      </div>` : ''}
+
+      <div class="glass-card rounded-xl p-4 bg-gradient-to-r from-primary-container/5 to-secondary/5 border border-primary-container/10">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">insights</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-body-md font-semibold">${__('transactions.optimizeTitle')}</p>
+            <p class="text-label-sm text-on-surface-variant">${__('transactions.optimizeDesc')}</p>
+          </div>
+          <button class="bg-primary-container/20 text-primary-container text-label-sm px-4 py-2 rounded-full hover:bg-primary-container/30 transition-all flex-shrink-0">${__('transactions.optimizeAction')}</button>
+        </div>
+      </div>
+    `;
+  },
+
+  applyClientFilter() {
+    this.renderTransactions();
+  },
+
+  attachCardEvents() {
+    document.querySelectorAll('.tx-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.tx-menu-btn')) return;
+        const id = card.dataset.id;
+        const tx = this.allTransactions.find(t => t.id === id);
+        if (tx) transactionModal.show('edit', tx);
+      });
+    });
+
+    document.querySelectorAll('.tx-menu-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        this.showContextMenu(btn, id);
+      });
+    });
+  },
+
+  showContextMenu(anchor, txId) {
+    const existing = document.querySelector('.tx-context-menu');
+    if (existing) existing.remove();
+
+    const tx = this.allTransactions.find(t => t.id === txId);
+    const rect = anchor.getBoundingClientRect();
+
+    const menu = document.createElement('div');
+    menu.className = 'tx-context-menu fixed z-[200] bg-surface-container border border-white/10 rounded-xl p-1.5 shadow-elevated slide-up';
+    menu.style.top = (rect.top - 80) + 'px';
+    menu.style.right = (window.innerWidth - rect.right + 8) + 'px';
+    menu.style.minWidth = '160px';
+
+    menu.innerHTML = `
+      <button class="ctx-item flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-label-sm text-on-surface hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">edit</span> ${__('transactions.edit')}
+      </button>
+      <button class="ctx-item flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-label-sm text-error hover:bg-error/10 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">delete</span> ${__('transactions.delete')}
+      </button>
+    `;
+
+    menu.querySelectorAll('.ctx-item')[0].addEventListener('click', () => {
+      menu.remove();
+      if (tx) transactionModal.show('edit', tx);
+    });
+
+    menu.querySelectorAll('.ctx-item')[1].addEventListener('click', async () => {
+      menu.remove();
+      if (!confirm(__('transactions.deleteConfirm'))) return;
+      try {
+        await api.transactions.delete(txId);
+        toast.success(__('transactions.transactionDeleted'));
+        await this.loadTransactions();
+        this.loadSummary();
+      } catch (err) {
+        toast.error(__('transactions.failedToDelete'));
+      }
+    });
+
+    document.body.appendChild(menu);
+    const closeMenu = (e) => {
+      if (!menu.contains(e.target)) {
+        menu.remove();
+        document.removeEventListener('click', closeMenu);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', closeMenu), 0);
   },
 
   exportCSV() {
@@ -157,7 +465,7 @@ const transactionsScreen = {
     </style></head><body><h1>LifeOS ${__('transactions.title')}</h1>
     <table><tr><th>${__('transactions.csvHeaders').split(',')[0]}</th><th>${__('transactions.csvHeaders').split(',')[1]}</th><th>${__('transactions.csvHeaders').split(',')[2]}</th><th>${__('transactions.csvHeaders').split(',')[3]}</th><th>${__('transactions.csvHeaders').split(',')[4]}</th></tr>`);
     txs.forEach(t => printWin.document.write(
-      `<tr><td>${t.date}</td><td class="${t.type.toLowerCase()}">${t.type}</td><td>${t.category}</td><td>${escapeHtml(t.description)}</td><td class="${t.type.toLowerCase()}">${t.type === 'INCOME' ? '+' : '-'}$${Number(t.amount).toLocaleString()}</td></tr>`
+      `<tr><td>${t.date}</td><td class="${t.type.toLowerCase()}">${t.type}</td><td>${t.category}</td><td>${escapeHtml(t.description)}</td><td class="${t.type.toLowerCase()}">${formatCurrencySign(t.amount, t.type)}</td></tr>`
     ));
     printWin.document.write('</table></body></html>');
     printWin.document.close();
@@ -167,3 +475,13 @@ const transactionsScreen = {
 };
 
 router.add('/transactions', () => transactionsScreen.render());
+
+function catIcon(category) {
+  const icons = {
+    FOOD: 'restaurant', TRANSPORT: 'directions_car', SHOPPING: 'shopping_bag',
+    ENTERTAINMENT: 'movie', BILLS: 'receipt', HEALTH: 'local_hospital',
+    SALARY: 'payments', FREELANCE: 'computer', INVESTMENT: 'trending_up',
+    EDUCATION: 'school', OTHER: 'more_horiz'
+  };
+  return icons[category] || 'receipt_long';
+}

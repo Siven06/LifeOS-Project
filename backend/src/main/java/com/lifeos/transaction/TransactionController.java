@@ -3,6 +3,7 @@ package com.lifeos.transaction;
 import com.lifeos.common.dto.ApiResponse;
 import com.lifeos.transaction.dto.TransactionRequest;
 import com.lifeos.transaction.dto.TransactionResponse;
+import com.lifeos.transaction.dto.TransactionSummaryResponse;
 import com.lifeos.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +64,13 @@ public class TransactionController {
             @Valid @RequestBody TransactionRequest request) {
         TransactionResponse response = transactionService.update(id, user.getId(), request);
         return ResponseEntity.ok(ApiResponse.ok("Transaction updated", response));
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<ApiResponse<TransactionSummaryResponse>> getSummary(
+            @AuthenticationPrincipal User user) {
+        TransactionSummaryResponse summary = transactionService.getSummary(user.getId());
+        return ResponseEntity.ok(ApiResponse.ok(summary));
     }
 
     @DeleteMapping("/{id}")

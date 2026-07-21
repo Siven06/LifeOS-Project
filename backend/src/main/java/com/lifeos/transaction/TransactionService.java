@@ -10,8 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lifeos.transaction.dto.TransactionSummaryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -115,6 +118,64 @@ public class TransactionService {
         BigDecimal totalExpense = transactionRepository.sumByUserIdAndType(user.getId(), TransactionType.EXPENSE);
         user.setTotalBalance(totalIncome.subtract(totalExpense));
         userRepository.save(user);
+    }
+
+    public TransactionSummaryResponse getSummary(String userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        LocalDate now = LocalDate.now();
+        LocalDate monthStart = now.withDayOfMonth(1);
+        LocalDate nextMonth = monthStart.plusMonths(1);
+        LocalDate prevMonthStart = monthStart.minusMonths(1);
+        LocalDate prevMonthEnd = monthStart.minusDays(1);
+
+        BigDecimal monthlyIncome = transactionRepository.sumByUserIdAndTypeBetween(user.getId(), TransactionType.INCOME, monthStart, nextMonth);
+        BigDecimal monthlyExpenses = transactionRepository.sumByUserIdAndTypeBetween(user.getId(), TransactionType.EXPENSE, monthStart, nextMonth);
+        BigDecimal previousExpenses = transactionRepository.sumByUserIdAndTypeBetween(user.getId(), TransactionType.EXPENSE, prevMonthStart, prevMonthEnd);
+
+        BigDecimal expenseChangePercent = BigDecimal.ZERO;
+        if (previousExpenses.compareTo(BigDecimal.ZERO) > 0) {
+            expenseChangePercent = monthlyExpenses.subtract(previousExpenses)
+                    .divide(previousExpenses, 4, RoundingMode.HALF_UP)
+                    .multiply(BigDecimal.valueOf(100))
+                    .setScale(1, RoundingMode.HALF_UP);
+        }
+
+        List<CategorySummary> catSummaries = transactionRepository.summarizeByCategory(user.getId(), TransactionType.EXPENSE, monthStart, nextMonth);
+
+        BigDecimal totalExpenses = catSummaries.stream()
+                .map(CategorySummary::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        List<TransactionSummaryResponse.CategoryBreakdown> breakdown = new ArrayList<>();
+        TransactionSummaryResponse.TopCategory topCategory = null;
+
+        for (int i = 0; i < catSummaries.size(); i++) {
+            CategorySummary cs = catSummaries.get(i);
+            double pct = totalExpenses.compareTo(BigDecimal.ZERO) > 0
+                    ? cs.getTotal().divide(totalExpenses, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100)).setScale(1, RoundingMode.HALF_UP).doubleValue()
+                    : 0;
+            breakdown.add(TransactionSummaryResponse.CategoryBreakdown.builder()
+                    .category(cs.getCategory().name())
+                    .total(cs.getTotal())
+                    .percentage(pct)
+                    .build());
+            if (i == 0) {
+                topCategory = TransactionSummaryResponse.TopCategory.builder()
+                        .category(cs.getCategory().name())
+                        .total(cs.getTotal())
+                        .percentage(pct)
+                        .build();
+            }
+        }
+
+        return TransactionSummaryResponse.builder()
+                .monthlyIncome(monthlyIncome)
+                .monthlyExpenses(monthlyExpenses)
+                .previousMonthExpenses(previousExpenses)
+                .expenseChangePercent(expenseChangePercent)
+                .topCategory(topCategory)
+                .categoryBreakdown(breakdown)
+                .build();
     }
 
     private TransactionResponse toResponse(Transaction t) {

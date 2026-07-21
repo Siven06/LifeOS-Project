@@ -56,7 +56,7 @@ const goalsScreen = {
             </div>
           </div>
           <h3 class="text-headline-md mb-1">${escapeHtml(g.title)}</h3>
-          <p class="text-label-sm text-on-surface-variant">$${Number(g.currentAmount).toLocaleString()} / $${Number(g.targetAmount).toLocaleString()}</p>
+          <p class="text-label-sm text-on-surface-variant">${formatCurrency(g.currentAmount)} / ${formatCurrency(g.targetAmount)}</p>
           <div class="flex gap-2 mt-4 w-full">
             <button class="btn-update-goal flex-1 bg-primary-container/20 text-primary-container text-label-sm py-2 rounded-lg hover:bg-primary-container/30 transition-all" data-id="${escapeAttr(g.id)}">${__('goals.update')}</button>
             <button class="btn-delete-goal text-error text-label-sm py-2 px-3 rounded-lg hover:bg-error/10 transition-all" data-id="${escapeAttr(g.id)}">
