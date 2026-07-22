@@ -1,0 +1,53 @@
+{
+  "name": "LifeOS - Finanzas Personales",
+  "short_name": "LifeOS",
+  "description": "Administra tus ingresos, gastos, presupuestos y metas financieras desde una sola plataforma",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0B",
+  "theme_color": "#0A0A0B",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "images/logo_lifeos.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity"],
+  "lang": "es",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Ver resumen financiero",
+      "url": "/#/dashboard",
+      "icons": [{ "src": "images/logo_lifeos.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Transacciones",
+      "short_name": "Transacciones",
+      "description": "Gestionar ingresos y gastos",
+      "url": "/#/transactions",
+      "icons": [{ "src": "images/logo_lifeos.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Presupuestos",
+      "short_name": "Presupuestos",
+      "description": "Controlar gastos mensuales",
+      "url": "/#/budgets",
+      "icons": [{ "src": "images/logo_lifeos.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Metas",
+      "short_name": "Metas",
+      "description": "Seguimiento de ahorro",
+      "url": "/#/goals",
+      "icons": [{ "src": "images/logo_lifeos.png", "sizes": "192x192" }]
+    }
+  ]
+}

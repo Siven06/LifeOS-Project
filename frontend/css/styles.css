@@ -196,3 +196,285 @@ body {
 .font-mono {
   font-family: 'JetBrains Mono', 'SF Mono', monospace;
 }
+
+/* ============ RESPONSIVE MOBILE-FIRST ============ */
+
+@media (max-width: 639px) {
+  .text-display {
+    font-size: 28px !important;
+    line-height: 34px !important;
+  }
+  .text-headline-lg {
+    font-size: 24px !important;
+    line-height: 30px !important;
+  }
+  .text-headline-md {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+  .text-numerical-lg {
+    font-size: 24px !important;
+    line-height: 30px !important;
+  }
+  .text-numerical-md {
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
+  .text-body-lg {
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
+
+  .px-5 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .glass-card {
+    border-radius: 12px !important;
+  }
+
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
+
+@media (max-width: 380px) {
+  .text-headline-md {
+    font-size: 18px !important;
+  }
+  .text-body-md {
+    font-size: 14px !important;
+  }
+  .text-label-sm {
+    font-size: 11px !important;
+  }
+  .h-16 {
+    height: 56px !important;
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  .pb-32 {
+    padding-bottom: calc(128px + env(safe-area-inset-bottom, 0px));
+  }
+  header.sticky {
+    padding-top: env(safe-area-inset-top, 0px);
+    height: calc(64px + env(safe-area-inset-top, 0px));
+  }
+  nav.fixed.bottom-0 {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    height: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 639px) {
+  .grid-cols-2.gap-4 > .glass-card {
+    padding: 12px;
+  }
+
+  .grid-cols-2.gap-3 > .glass-card {
+    padding: 12px;
+  }
+
+  #summary-cards {
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  #summary-cards > div {
+    min-width: 120px;
+    flex: 0 0 auto;
+  }
+
+  .gap-4 {
+    gap: 12px !important;
+  }
+  .gap-6 {
+    gap: 16px !important;
+  }
+  .gap-3 {
+    gap: 8px !important;
+  }
+  .p-6 {
+    padding: 16px !important;
+  }
+  .p-5 {
+    padding: 14px !important;
+  }
+  .mb-6 {
+    margin-bottom: 12px !important;
+  }
+  .mb-8 {
+    margin-bottom: 16px !important;
+  }
+  .mt-8 {
+    margin-top: 16px !important;
+  }
+  .pt-8 {
+    padding-top: 16px !important;
+  }
+  .pt-6 {
+    padding-top: 12px !important;
+  }
+
+  .pt-5 {
+    padding-top: 12px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .tx-card .flex.items-center.gap-4 {
+    gap: 10px !important;
+  }
+  .tx-card .w-11.h-11 {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .tx-card .w-11.h-11 .material-symbols-outlined {
+    font-size: 18px !important;
+  }
+
+  .debt-card .flex.items-start.gap-4 {
+    gap: 10px !important;
+  }
+  .debt-card .btn-pay {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+  .debt-card .btn-pay .material-symbols-outlined {
+    font-size: 16px !important;
+  }
+  .debt-card .btn-edit,
+  .debt-card .btn-delete {
+    padding: 4px !important;
+  }
+  .debt-card .text-numerical-lg {
+    font-size: 20px !important;
+  }
+
+  .profile-link .w-10.h-10 {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .profile-link .material-symbols-outlined.text-\\[20px\\] {
+    font-size: 18px !important;
+  }
+
+  .budget-card .w-11.h-11 {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .budget-card .w-11.h-11 .material-symbols-outlined {
+    font-size: 18px !important;
+  }
+
+  .goals-card .w-32.h-32 {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .flex.items-center.justify-between.gap-4 {
+    flex-wrap: wrap;
+    gap: 8px !important;
+  }
+
+  .debt-card .flex.items-center.gap-2 {
+    flex-wrap: wrap;
+  }
+
+  .debt-card .grid.grid-cols-2.gap-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  #debt-summary.grid-cols-2 {
+    gap: 8px;
+  }
+  #debt-summary .glass-card {
+    padding: 12px !important;
+  }
+  #debt-summary .text-numerical-lg {
+    font-size: 18px !important;
+  }
+}
+
+button, 
+a, 
+input, 
+select, 
+textarea {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button, 
+.nav-link, 
+a {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (max-width: 639px) {
+  .material-symbols-outlined {
+    font-size: 20px !important;
+  }
+  .material-symbols-outlined.text-2xl {
+    font-size: 22px !important;
+  }
+  .material-symbols-outlined.text-3xl {
+    font-size: 26px !important;
+  }
+  .material-symbols-outlined.text-4xl {
+    font-size: 30px !important;
+  }
+  .material-symbols-outlined.text-5xl {
+    font-size: 36px !important;
+  }
+  .material-symbols-outlined.text-6xl {
+    font-size: 42px !important;
+  }
+
+  .w-24.h-24 {
+    width: 72px !important;
+    height: 72px !important;
+  }
+  .w-24.h-24 .text-display {
+    font-size: 24px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  [class*="grid-cols-12"] > [class*="col-span-12"] {
+    grid-column: span 12 / span 12 !important;
+  }
+  [class*="grid-cols-12"] > [class*="md\\:col-span-7"],
+  [class*="grid-cols-12"] > [class*="md\\:col-span-5"] {
+    grid-column: span 12 / span 12 !important;
+  }
+}
+
+header > .flex.items-center.gap-3 .w-10.h-10 {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+header h1 {
+  font-size: 20px !important;
+}
+
+@media (max-width: 380px) {
+  header h1 {
+    font-size: 17px !important;
+  }
+}
+
+input, select {
+  font-size: 16px !important;
+}

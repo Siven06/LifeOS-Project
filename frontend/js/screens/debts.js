@@ -14,11 +14,11 @@ const debtsScreen = {
         </header>
 
         <main class="relative z-10 max-w-7xl mx-auto px-5 pt-8 pb-32">
-          <div class="flex justify-between items-center mb-8">
-            <h1 class="text-display text-primary">${__('debts.title')}</h1>
-            <button id="btn-add-debt" class="bg-primary-container text-on-primary font-semibold px-5 py-3 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-2">
+          <div class="flex justify-between items-center gap-3 mb-8">
+            <h1 class="text-headline-lg md:text-display text-primary">${__('debts.title')}</h1>
+            <button id="btn-add-debt" class="bg-primary-container text-on-primary font-semibold px-4 py-2.5 md:px-5 md:py-3 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-2 whitespace-nowrap">
               <span class="material-symbols-outlined">add</span>
-              ${__('debts.addDebt')}
+              <span class="hidden sm:inline">${__('debts.addDebt')}</span>
             </button>
           </div>
 
@@ -196,16 +196,16 @@ const debtsScreen = {
             </div>
             <p class="text-label-sm text-on-surface-variant">${typeLabel} · ${categoryLabel}</p>
           </div>
-          <div class="flex items-center gap-2">
-            <button class="btn-pay bg-primary-container text-on-primary px-3 py-2 rounded-lg text-label-sm font-medium hover:brightness-110 transition-all flex items-center gap-1">
-              <span class="material-symbols-outlined text-[18px]">payments</span>
-              ${__('debts.makePayment')}
+          <div class="flex items-center gap-1 sm:gap-2">
+            <button class="btn-pay bg-primary-container text-on-primary px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-label-sm font-medium hover:brightness-110 transition-all flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px] sm:text-[18px]">payments</span>
+              <span class="hidden sm:inline">${__('debts.makePayment')}</span>
             </button>
-            <button class="btn-edit p-2 rounded-lg hover:bg-surface-bright/20 text-on-surface-variant transition-all">
-              <span class="material-symbols-outlined">edit</span>
+            <button class="btn-edit p-1.5 sm:p-2 rounded-lg hover:bg-surface-bright/20 text-on-surface-variant transition-all">
+              <span class="material-symbols-outlined text-[18px] sm:text-[22px]">edit</span>
             </button>
-            <button class="btn-delete p-2 rounded-lg hover:bg-surface-bright/20 text-on-surface-variant transition-all">
-              <span class="material-symbols-outlined">delete</span>
+            <button class="btn-delete p-1.5 sm:p-2 rounded-lg hover:bg-surface-bright/20 text-on-surface-variant transition-all">
+              <span class="material-symbols-outlined text-[18px] sm:text-[22px]">delete</span>
             </button>
           </div>
         </div>

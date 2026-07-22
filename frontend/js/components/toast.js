@@ -4,7 +4,7 @@ const toast = {
     if (existing) existing.remove();
 
     const container = document.createElement('div');
-    container.className = 'toast-container fixed top-20 right-5 z-[200] slide-up';
+    container.className = 'toast-container fixed top-20 left-1/2 -translate-x-1/2 sm:left-auto sm:right-5 sm:translate-x-0 z-[200] slide-up';
 
     const colors = {
       success: 'bg-tertiary-fixed-dim/20 text-tertiary-fixed-dim border-tertiary-fixed-dim/30',
@@ -19,7 +19,7 @@ const toast = {
     };
 
     container.innerHTML = `
-      <div class="${colors[type] || colors.info} backdrop-blur-xl border rounded-xl px-5 py-4 flex items-center gap-3 shadow-2xl min-w-[300px]">
+      <div class="${colors[type] || colors.info} backdrop-blur-xl border rounded-xl px-5 py-4 flex items-center gap-3 shadow-2xl min-w-[300px] sm:min-w-[400px] max-w-[90vw]">
         <span class="material-symbols-outlined">${icons[type] || icons.info}</span>
         <span class="text-body-md">${message}</span>
       </div>

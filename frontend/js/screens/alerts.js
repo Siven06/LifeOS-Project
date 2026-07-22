@@ -16,6 +16,61 @@ const alertsScreen = {
             </div>
           </div>
         </main>
+
+        <nav class="bg-surface-container/90 backdrop-blur-2xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/10 h-[72px]">
+          <div class="max-w-lg mx-auto h-full flex items-stretch px-2 relative">
+            <a href="#/" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">home</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.home')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/transactions" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/transactions">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">receipt_long</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.history')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <div class="flex items-center justify-center flex-[0.8] relative">
+              <button id="fab-alert-add" class="absolute -top-5 bg-primary-container text-on-primary w-12 h-12 rounded-full center-button-glow active:scale-90 hover:scale-105 transition-all shadow-lg shadow-primary-container/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">add</span>
+              </button>
+            </div>
+            <a href="#/budgets" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/budgets">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.budget')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/debts" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/debts">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">credit_score</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.debts')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/profile" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/profile">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">person</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.profile')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+          </div>
+        </nav>
       </div>
     `;
 
@@ -28,6 +83,8 @@ const alertsScreen = {
         toast.error(__('alerts.failedToDismissAll'));
       }
     });
+
+    document.getElementById('fab-alert-add')?.addEventListener('click', () => transactionModal.show('create'));
 
     await this.loadAlerts();
   },

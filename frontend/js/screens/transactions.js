@@ -398,9 +398,16 @@ const transactionsScreen = {
 
     const menu = document.createElement('div');
     menu.className = 'tx-context-menu fixed z-[200] bg-surface-container border border-white/10 rounded-xl p-1.5 shadow-elevated slide-up';
-    menu.style.top = (rect.top - 80) + 'px';
-    menu.style.right = (window.innerWidth - rect.right + 8) + 'px';
-    menu.style.minWidth = '160px';
+    const isMobile = window.innerWidth < 640;
+    if (isMobile) {
+      menu.style.left = rect.left + 'px';
+      menu.style.top = (rect.bottom + 4) + 'px';
+      menu.style.minWidth = '160px';
+    } else {
+      menu.style.top = (rect.top - 80) + 'px';
+      menu.style.right = (window.innerWidth - rect.right + 8) + 'px';
+      menu.style.minWidth = '160px';
+    }
 
     menu.innerHTML = `
       <button class="ctx-item flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-label-sm text-on-surface hover:bg-white/5 transition-colors">

@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = 'http://10.200.13.147:8080/api';
 const REQUEST_TIMEOUT = 15000;
 
 const api = {

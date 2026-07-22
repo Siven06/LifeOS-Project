@@ -85,9 +85,9 @@ const profileScreen = {
               <div class="flex items-center justify-between">
                 <div>
                   <p class="text-body-md font-semibold">${__('profile.defaultCurrency')}</p>
-                  <div class="flex gap-2 mt-2">
+                  <div class="flex flex-wrap gap-2 mt-2">
                     ${['USD', 'EUR', 'GBP', 'COP'].map(c => `
-                      <button class="currency-btn px-3 py-1.5 rounded-lg text-label-sm transition-all border ${c === currentCurrency ? 'bg-primary-container/20 text-primary-container border-primary-container/30' : 'bg-surface-container-highest text-on-surface-variant border-white/10 hover:bg-surface-container'}" data-currency="${c}">${c}</button>
+                      <button class="currency-btn px-2.5 py-1.5 rounded-lg text-label-sm transition-all border ${c === currentCurrency ? 'bg-primary-container/20 text-primary-container border-primary-container/30' : 'bg-surface-container-highest text-on-surface-variant border-white/10 hover:bg-surface-container'}" data-currency="${c}">${c}</button>
                     `).join('')}
                   </div>
                 </div>
@@ -215,6 +215,15 @@ const profileScreen = {
                   <span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
                 </div>
                 <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.budget')}</span>
+              </div>
+              <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
+            </a>
+            <a href="#/debts" class="flex flex-col items-center justify-center flex-1 gap-0.5 text-on-surface-variant transition-all nav-link relative group" data-route="/debts">
+              <div class="relative flex flex-col items-center">
+                <div class="w-10 h-6 flex items-center justify-center rounded-lg transition-colors group-hover:bg-white/5">
+                  <span class="material-symbols-outlined text-[22px]">credit_score</span>
+                </div>
+                <span class="text-[10px] leading-none font-semibold tracking-wide">${__('nav.debts')}</span>
               </div>
               <div class="absolute -top-px left-1/3 right-1/3 h-[3px] bg-primary-container rounded-full nav-indicator opacity-0 transition-all duration-200"></div>
             </a>
