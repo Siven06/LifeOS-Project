@@ -68,3 +68,48 @@ function formatCurrencySign(amount, type) {
   const prefix = type === 'INCOME' ? '+' : '-';
   return prefix + formatCurrency(Math.abs(amount));
 }
+
+const ThemeManager = {
+  STORAGE_KEY: 'theme',
+
+  init() {
+    const saved = localStorage.getItem(this.STORAGE_KEY) || 'dark';
+    this.apply(saved, false);
+  },
+
+  getCurrent() {
+    return localStorage.getItem(this.STORAGE_KEY) || 'dark';
+  },
+
+  apply(theme, persist = true) {
+    const html = document.documentElement;
+    html.classList.add('theme-transitioning');
+    if (theme === 'light') {
+      html.classList.remove('dark');
+      document.getElementById('meta-theme-color')?.setAttribute('content', '#F8F9FA');
+    } else {
+      html.classList.add('dark');
+      document.getElementById('meta-theme-color')?.setAttribute('content', '#0A0A0B');
+    }
+    if (persist) {
+      localStorage.setItem(this.STORAGE_KEY, theme);
+      if (localStorage.getItem('token')) {
+        api.users.updateTheme(theme).catch(() => {});
+      }
+    }
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+    setTimeout(() => html.classList.remove('theme-transitioning'), 400);
+  },
+
+  toggle() {
+    const current = this.getCurrent();
+    const next = current === 'dark' ? 'light' : 'dark';
+    this.apply(next);
+    return next;
+  },
+
+  getLabelKey() {
+    const current = this.getCurrent();
+    return current === 'dark' ? 'profile.themeDark' : 'profile.themeLight';
+  }
+};

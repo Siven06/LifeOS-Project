@@ -1,12 +1,106 @@
+/* Light mode overrides for Tailwind utility classes */
+:root:not(.dark) [class*="border-white/"] {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root:not(.dark) hr.border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* === CSS CUSTOM PROPERTIES — TEMA CLARO/OSCURO === */
+:root {
+  --color-background: 248 249 250;
+  --color-surface: 255 255 255;
+  --color-surface-dim: 232 232 236;
+  --color-surface-bright: 240 240 243;
+  --color-surface-container: 240 240 243;
+  --color-surface-container-low: 245 245 247;
+  --color-surface-container-high: 224 224 228;
+  --color-surface-container-highest: 212 212 216;
+  --color-surface-container-lowest: 255 255 255;
+  --color-on-surface: 28 27 31;
+  --color-on-surface-variant: 73 69 79;
+  --color-primary: 0 107 122;
+  --color-primary-container: 77 208 225;
+  --color-on-primary: 255 255 255;
+  --color-on-primary-container: 0 54 58;
+  --color-primary-fixed: 0 107 122;
+  --color-primary-fixed-dim: 0 163 180;
+  --color-secondary: 98 91 113;
+  --color-secondary-container: 232 222 248;
+  --color-on-secondary: 255 255 255;
+  --color-on-secondary-container: 29 25 43;
+  --color-tertiary: 126 82 96;
+  --color-tertiary-container: 255 216 228;
+  --color-tertiary-fixed-dim: 239 188 204;
+  --color-on-tertiary: 255 255 255;
+  --color-success: 46 125 50;
+  --color-success-container: 165 214 167;
+  --color-danger: 186 26 26;
+  --color-danger-container: 255 218 214;
+  --color-error: 186 26 26;
+  --color-error-container: 255 218 214;
+  --color-outline: 0 0 0 / 0.12;
+  --color-outline-variant: 0 0 0 / 0.06;
+  --color-surface-tint: 0 107 122;
+}
+
+.dark {
+  --color-background: 10 10 11;
+  --color-surface: 19 19 20;
+  --color-surface-dim: 19 19 20;
+  --color-surface-bright: 58 57 58;
+  --color-surface-container: 28 28 30;
+  --color-surface-container-low: 28 27 28;
+  --color-surface-container-high: 44 44 46;
+  --color-surface-container-highest: 53 52 54;
+  --color-surface-container-lowest: 14 14 15;
+  --color-on-surface: 232 232 232;
+  --color-on-surface-variant: 142 142 147;
+  --color-primary: 224 247 250;
+  --color-primary-container: 0 184 212;
+  --color-on-primary: 0 54 58;
+  --color-on-primary-container: 0 108 113;
+  --color-primary-fixed: 99 247 255;
+  --color-primary-fixed-dim: 0 163 180;
+  --color-secondary: 209 196 233;
+  --color-secondary-container: 98 0 234;
+  --color-on-secondary: 60 0 144;
+  --color-on-secondary-container: 221 205 255;
+  --color-tertiary: 236 255 234;
+  --color-tertiary-container: 59 252 137;
+  --color-tertiary-fixed-dim: 0 228 117;
+  --color-on-tertiary: 0 57 24;
+  --color-success: 105 240 174;
+  --color-success-container: 27 94 32;
+  --color-danger: 255 138 128;
+  --color-danger-container: 183 28 28;
+  --color-error: 255 138 128;
+  --color-error-container: 147 0 10;
+  --color-outline: 255 255 255 / 0.1;
+  --color-outline-variant: 255 255 255 / 0.05;
+  --color-surface-tint: 0 163 180;
+}
+
 /* === TUS ESTILOS ORIGINALES (sin tocar) === */
 .glass-card {
-  background: rgba(22, 22, 24, 0.8);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(245, 245, 247, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .glass-card {
+  background: rgba(22, 22, 24, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .glass-card:hover {
+  background: rgba(245, 245, 247, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dark .glass-card:hover {
   background: rgba(22, 22, 24, 1);
   box-shadow: 0 0 30px rgba(0, 245, 255, 0.15);
 }
@@ -17,7 +111,7 @@
 }
 
 .center-button-glow {
-  box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 184, 212, 0.4);
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -30,10 +124,26 @@
 }
 
 body {
-  background-color: #0A0A0B;
-  color: #e5e2e3;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-on-surface));
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Smooth theme transitions — activated only via .theme-transitioning */
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition-property: background-color, border-color, box-shadow, color;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+}
+
+html.theme-transitioning .material-symbols-outlined,
+html.theme-transitioning img,
+html.theme-transitioning svg {
+  transition: none !important;
 }
 
 ::-webkit-scrollbar {
@@ -41,11 +151,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0B;
+  background: var(--color-background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #353436;
+  background: var(--color-surface-container-highest);
   border-radius: 10px;
 }
 
@@ -80,10 +190,16 @@ body {
 
 /* Background grid pattern */
 .bg-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+}
+
+.dark .bg-grid {
   background-image: 
     linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
 }
 
 /* Tabular numbers for currency alignment */
@@ -93,9 +209,13 @@ body {
 
 /* Glass effect for header/nav */
 .glass-header {
-  background: rgba(10, 10, 11, 0.8);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+}
+
+.dark .glass-header {
+  background: rgba(10, 10, 11, 0.8);
 }
 
 /* Card hover lift effect */
@@ -104,6 +224,9 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-2px);
+}
+
+.dark .card-hover:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
@@ -114,6 +237,10 @@ body {
 
 /* Progress bar gradient (income to expense) */
 .progress-gradient {
+  background: linear-gradient(90deg, #2E7D32 0%, #2E7D32 85%, #BA1A1A 85%, #BA1A1A 100%);
+}
+
+.dark .progress-gradient {
   background: linear-gradient(90deg, #69F0AE 0%, #69F0AE 85%, #FF8A80 85%, #FF8A80 100%);
 }
 
@@ -130,14 +257,31 @@ body {
 
 /* Transaction category icon backgrounds */
 .icon-income {
+  background: rgba(46, 125, 50, 0.1);
+  color: #2E7D32;
+}
+
+.dark .icon-income {
   background: rgba(105, 240, 174, 0.1);
   color: #69F0AE;
 }
+
 .icon-expense {
+  background: rgba(186, 26, 26, 0.1);
+  color: #BA1A1A;
+}
+
+.dark .icon-expense {
   background: rgba(255, 138, 128, 0.1);
   color: #FF8A80;
 }
+
 .icon-shopping {
+  background: rgba(0, 107, 122, 0.1);
+  color: #006B7A;
+}
+
+.dark .icon-shopping {
   background: rgba(0, 184, 212, 0.1);
   color: #00B8D4;
 }
@@ -156,11 +300,19 @@ body {
 
 /* Elevated shadow for cards */
 .shadow-elevated {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.dark .shadow-elevated {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 /* Card shadow with subtle border */
 .shadow-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.dark .shadow-card {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 

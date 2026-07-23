@@ -186,6 +186,7 @@
     "language": "Idioma",
     "theme": "Tema",
     "themeDark": "Kinetic Dark",
+    "themeLight": "Luminous Light",
     "smartAlerts": "Alertas Inteligentes",
     "spendingAlerts": "Alertas de Gastos",
     "spendingAlertsDesc": "Notificar cuando exceda el presupuesto diario",

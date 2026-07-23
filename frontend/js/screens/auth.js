@@ -65,6 +65,9 @@ const authScreen = {
 
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data));
+        if (res.data.theme) {
+          ThemeManager.apply(res.data.theme);
+        }
         toast.success(isRegister ? __('auth.accountCreated') : __('auth.welcomeBackMsg'));
         router.navigate('/');
       } catch (err) {

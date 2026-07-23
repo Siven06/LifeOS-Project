@@ -40,6 +40,7 @@ public class AuthService {
                 .userId(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .theme(user.getTheme())
                 .build();
     }
 
@@ -57,6 +58,7 @@ public class AuthService {
                 .userId(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .theme(user.getTheme())
                 .build();
     }
 }

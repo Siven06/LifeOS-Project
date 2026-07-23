@@ -102,10 +102,10 @@ const profileScreen = {
               <div class="flex items-center justify-between py-2">
                 <div>
                   <p class="text-body-md font-semibold">${__('profile.theme')}</p>
-                  <p class="text-label-sm text-on-surface-variant">${__('profile.themeDark')}</p>
+                  <p class="text-label-sm text-on-surface-variant" id="theme-label">${__(ThemeManager.getLabelKey())}</p>
                 </div>
-                <button class="w-14 h-7 rounded-full bg-primary-container relative pointer-events-none">
-                  <div class="w-5 h-5 rounded-full bg-on-primary absolute top-1 right-1 shadow-sm"></div>
+                <button id="btn-toggle-theme" class="w-14 h-7 rounded-full relative transition-colors ${ThemeManager.getCurrent() === 'dark' ? 'bg-primary-container' : 'bg-primary-container/50'}">
+                  <div class="w-5 h-5 rounded-full bg-on-primary absolute top-1 shadow-sm transition-all ${ThemeManager.getCurrent() === 'dark' ? 'right-1' : 'left-1'}"></div>
                 </button>
               </div>
             </div>
@@ -264,6 +264,16 @@ const profileScreen = {
     });
 
     document.getElementById('btn-change-lang')?.addEventListener('click', () => this.showLanguageModal());
+
+    document.getElementById('btn-toggle-theme')?.addEventListener('click', () => {
+      const next = ThemeManager.toggle();
+      const btn = document.getElementById('btn-toggle-theme');
+      const knob = btn.querySelector('div');
+      const label = document.getElementById('theme-label');
+      btn.className = `w-14 h-7 rounded-full relative transition-colors ${next === 'dark' ? 'bg-primary-container' : 'bg-primary-container/50'}`;
+      knob.className = `w-5 h-5 rounded-full bg-on-primary absolute top-1 shadow-sm transition-all ${next === 'dark' ? 'right-1' : 'left-1'}`;
+      label.textContent = __(ThemeManager.getLabelKey());
+    });
 
     document.querySelectorAll('.currency-btn').forEach(btn => {
       btn.addEventListener('click', () => {

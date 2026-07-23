@@ -28,6 +28,7 @@ public class UserController {
             @Valid @RequestBody UpdateProfileRequest request) {
         if (request.getName() != null) user.setName(request.getName());
         if (request.getAvatarUrl() != null) user.setAvatarUrl(request.getAvatarUrl());
+        if (request.getTheme() != null) user.setTheme(request.getTheme());
         User updated = userService.save(user);
         return ResponseEntity.ok(ApiResponse.ok("Profile updated", updated));
     }

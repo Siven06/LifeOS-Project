@@ -186,6 +186,7 @@
     "language": "Language",
     "theme": "Theme",
     "themeDark": "Kinetic Dark",
+    "themeLight": "Luminous Light",
     "smartAlerts": "Smart Alerts",
     "spendingAlerts": "Spending Alerts",
     "spendingAlertsDesc": "Notify when I exceed daily budget",

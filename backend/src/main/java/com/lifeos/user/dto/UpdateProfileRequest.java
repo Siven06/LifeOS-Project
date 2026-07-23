@@ -10,4 +10,6 @@ public class UpdateProfileRequest {
     private String name;
 
     private String avatarUrl;
+
+    private String theme;
 }

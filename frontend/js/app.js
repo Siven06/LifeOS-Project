@@ -1,5 +1,6 @@
 (async function() {
   await i18n.init();
+  ThemeManager.init();
 
   router.add('/login', () => authScreen.render());
   router.add('/register', () => authScreen.render());

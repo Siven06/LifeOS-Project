@@ -42,6 +42,9 @@ public class User implements UserDetails {
     @Column(length = 500)
     private String avatarUrl;
 
+    @Column(length = 10)
+    private String theme;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
